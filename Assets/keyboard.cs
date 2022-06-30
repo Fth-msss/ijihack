@@ -2,69 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Hackingminigame;
 
 public class keyboard : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private Ijihack playerControls;
-    private InputAction navigateAction;
-
-    private void Awake()
-    {
-        playerControls = new Ijihack();
-        playerInput = GetComponent<PlayerInput>();
-        navigateAction = playerInput.actions["Navigate"];
-       // jumpAction = playerInput.actions["Jump"];
-      //  jumpAction.ReadValue<float>();
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-        playerControls.UI.Navigate.performed -= Movin;
-    }
-
-    private void Start()
-    {
-        playerControls.UI.Navigate.performed += Movin;
-    }
-
-    private void Movin(InputAction.CallbackContext context) 
-    {
-        context.ReadValue<Vector2>();
-        Debug.Log(context.ReadValue<Vector2>());
-    }
-
+    // a simple script to control
+    public Hacking hackingobject;
     private void Update()
     {
-        Vector2 move = playerControls.UI.Navigate.ReadValue<Vector2>();
-       // Debug.Log(navigateAction.ReadValue<Vector2>());
-        playerControls.UI.Navigate.ReadValue<Vector2>();
+        if (Keyboard.current.aKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().MoveNode("left"); }
+        else if (Keyboard.current.sKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().MoveNode("down"); }
+        else if (Keyboard.current.dKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().MoveNode("right"); }
+        else if (Keyboard.current.wKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().MoveNode("up"); }
+        else if (Keyboard.current.rKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().StartMinigame(); }
+        else if (Keyboard.current.hKey.wasPressedThisFrame) { }
+        else if (Keyboard.current.jKey.wasPressedThisFrame) { }
+        else if (Keyboard.current.kKey.wasPressedThisFrame) { }
+        else if (Keyboard.current.lKey.wasPressedThisFrame) { }
+        else if (Keyboard.current.tKey.wasPressedThisFrame) { hackingobject.GetComponent<Hacking>().IsTimed = !hackingobject.GetComponent<Hacking>().IsTimed; }
+
+
+
     }
 
 
-    ////what is this?
-
-    //GameObject asdf;
-    //Keyboard kb;
-    //public InputActionAsset controls;
-
-    //void MoveHackNode(string asd) 
-    //{
-    //    asdf.GetComponent<Hacking>().MoveNode(asd);
-    //}
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    kb = InputSystem.GetDevice<Keyboard>();
-    //    if (kb.spaceKey.wasPressedThisFrame) 
-    //    {
-    //        Shoot();
-    //    }
-    //}
 }

@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class NodeState : MonoBehaviour
 {
-    [SerializeField]
-   private string state;
+    private string state;
     Image childcolor;
     private void Awake()
     {
-        //this comically does not get components in children rather gets it from parent.
-        childcolor = GetComponentInChildren<Image>();
+        //there is only one child why am i doing this
+        foreach(Transform child in transform) { childcolor = child.GetComponent<Image>(); }
     }
 
     public string State 
@@ -23,6 +22,8 @@ public class NodeState : MonoBehaviour
     
     void ChangeColor() 
     {
+        if (childcolor == null) { foreach (Transform child in transform) { childcolor = child.GetComponent<Image>(); } }
+
         switch (state) 
         {
             case "empty":
@@ -32,10 +33,13 @@ public class NodeState : MonoBehaviour
                 childcolor.color = Color.green;
                 break;
             case "obstacle":
-                childcolor.color = Color.black;
+                childcolor.color = Color.blue;
                 break;
             case "exit":
                 childcolor.color = Color.red;
+                break;
+            case "debug":
+                childcolor.color = Color.yellow;
                 break;
         
         }
